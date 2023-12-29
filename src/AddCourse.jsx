@@ -4,6 +4,7 @@ import React, { useState } from "react";
 function AddCourse() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [image, setImage] = useState("");
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -27,6 +28,16 @@ function AddCourse() {
           />
           <br />
           <br />
+          <TextField
+            onChange={(e) => {
+              setImage(e.target.value);
+            }}
+            label="Image Link"
+            variant="outlined"
+            fullWidth={true}
+          />
+          <br />
+          <br />
           <Button
             size="large"
             variant="contained"
@@ -36,7 +47,7 @@ function AddCourse() {
                 body: JSON.stringify({
                   title: title,
                   description: description,
-                  imageLink: "",
+                  imageLink: image,
                   published: true,
                 }),
                 headers: {
@@ -48,7 +59,7 @@ function AddCourse() {
                   return res.json();
                 })
                 .then((data) => {
-                  localStorage.setItem("token", data.token);
+                  alert("Course added successfully !!");
                 });
             }}
           >
