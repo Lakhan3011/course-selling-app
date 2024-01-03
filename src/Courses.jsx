@@ -1,21 +1,20 @@
-import { Card, Typography } from "@mui/material";
+import { Button, Card, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Courses() {
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/admin/courses", {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    })
-      .then((res) => {
-        return res.json();
+    axios
+      .get("http://localhost:3000/admin/courses", {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
       })
-      .then((data) => {
-        setCourses(data.courses);
+      .then((res) => {
+        setCourses(res.data.courses);
       });
   }, []);
 
@@ -30,21 +29,33 @@ function Courses() {
   );
 }
 
-function Course(props) {
+function Course({ course }) {
+  const navigate = useNavigate();
   return (
     <div>
       <Card
         variant="outlined"
-        style={{ width: 300, margin: 10, minHeight: 200 }}
+        style={{ width: 300, margin: 10, minHeight: 200, padding: 20 }}
       >
         <Typography variant="h5" textAlign={"center"}>
-          {props.course.title}
+          {course.title}
         </Typography>
 
         <Typography variant="subtitle1" textAlign={"center"}>
-          {props.course.description}
+          {course.description}
         </Typography>
-        <img src={props.course.imageLink} style={{ width: 350 }}></img>
+        <img src={course.imageLink} style={{ width: 300 }}></img>
+        <div
+          style={{ marginTop: 20, display: "flex", justifyContent: "center" }}
+        >
+          <Button
+            variant="contained"
+            size="large"
+            onClick={() => navigate("/course/" + course.id)}
+          >
+            Edit
+          </Button>
+        </div>
       </Card>
     </div>
   );

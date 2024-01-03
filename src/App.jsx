@@ -6,13 +6,7 @@ import Signin from "./Signin";
 import Signup from "./Signup";
 import Courses from "./Courses";
 import Course from "./Course";
-import {
-  RecoilRoot,
-  atom,
-  selector,
-  useRecoilState,
-  useRecoilValue,
-} from "recoil";
+import { RecoilRoot } from "recoil";
 
 function App() {
   return (

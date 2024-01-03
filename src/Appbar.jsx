@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 function Appbar() {
   const navigate = useNavigate();
-  const [userEmail, setUserEmail] = useState("");
+  const [userEmail, setUserEmail] = useState(null);
 
   useEffect(() => {
     fetch("http://localhost:3000/admin/me", {
@@ -27,24 +27,44 @@ function Appbar() {
         style={{
           display: "flex",
           justifyContent: "space-between",
-          padding: 15,
+          padding: 4,
+          zIndex: 1,
         }}
       >
-        <div>
+        <div style={{ marginLeft: 10 }}>
           <Typography variant="h6">Coursera</Typography>
         </div>
         <div style={{ display: "flex" }}>
-          {userEmail}
-          <Button
-            variant="contained"
-            style={{ marginRight: 20 }}
-            onClick={() => {
-              localStorage.setItem("token", null);
-              window.location = "/";
-            }}
-          >
-            Logout
-          </Button>
+          <div style={{ marginRight: 10, display: "flex" }}>
+            <div style={{ marginRight: 10 }}>
+              <Button
+                onClick={() => {
+                  navigate("/addcourse");
+                }}
+              >
+                Add course
+              </Button>
+            </div>
+            <div style={{ marginRight: 10 }}>
+              <Button
+                onClick={() => {
+                  navigate("/courses");
+                }}
+              >
+                Courses
+              </Button>
+            </div>
+            <Button
+              variant="contained"
+              style={{ marginRight: 20 }}
+              onClick={() => {
+                localStorage.setItem("token", null);
+                window.location = "/";
+              }}
+            >
+              Logout
+            </Button>
+          </div>
         </div>
       </div>
     );
